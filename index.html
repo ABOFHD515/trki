@@ -1,105 +1,105 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <title>تحدي تركي</title>
-    <style>
-        body {
-            background-color: #000; /* لون الخلفية أسود */
-            color: #fff; /* لون النص أبيض */
-            font-family: 'Arial', sans-serif; /* تغيير الخط */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
-            margin: 0;
-        }
-        #game {
-            text-align: center;
-            width: 300px;
-        }
-        button {
-            background-color: #4CAF50; /* لون الخلفية للأزرار */
-            color: white; /* لون النص للأزرار */
-            padding: 15px 32px;
-            text-align: center;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-        }
-        #result {
-            color: #FFD700; /* لون نص النتيجة */
-            margin-top: 20px;
-            font-size: 24px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>تحدي تركي</title>
+  <style>
+    body {
+      background-color: #000; /* لون الخلفية أسود */
+      color: #fff; /* لون النص أبيض */
+      font-family: 'Arial', sans-serif; /* تغيير الخط */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+    }
+    #game {
+      text-align: center;
+      width: 300px;
+    }
+    #round-number {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: #4CAF50; /* لون الخلفية للأزرار */
+      color: white; /* لون النص للأزرار */
+      padding: 15px 32px;
+      text-align: center;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+    #result {
+      color: #FFD700; /* لون نص النتيجة */
+      margin-top: 20px;
+      font-size: 24px;
+    }
+  </style>
 </head>
 <body>
-    <h1>تحدي تركي</h1>
-    <div id="game">
-        <button id="rock">حجر</button>
-        <button id="paper">ورقة</button>
-        <button id="scissors">مقص</button>
-        <div id="result"></div>
-    </div>
-    <script>
-        let playerWins = 0;
-        let computerWins = 0;
-        let rounds = 0;
+  <h1 id="game-title">تحدي تركي</h1>
+  <div id="game">
+    <span id="round-number">الجولة 1 من 3</span>
+    <button id="rock">حجر</button>
+    <button id="paper">ورقة</button>
+    <button id="scissors">مقص</button>
+    <div id="result"></div>
+  </div>
+  <script>
+    let playerWins = 0;
+    let computerWins = 0;
+    let rounds = 0;
 
-        document.getElementById('rock').addEventListener('click', function() {
-            playGame('حجر');
-        });
+    document.getElementById('rock').addEventListener('click', function() {
+      playGame('حجر');
+    });
 
-        document.getElementById('paper').addEventListener('click', function() {
-            playGame('ورقة');
-        });
+    document.getElementById('paper').addEventListener('click', function() {
+      playGame('ورقة');
+    });
 
-        document.getElementById('scissors').addEventListener('click', function() {
-            playGame('مقص');
-        });
+    document.getElementById('scissors').addEventListener('click', function() {
+      playGame('مقص');
+    });
 
-        function playGame(playerChoice) {
-            const choices = ['حجر', 'ورقة', 'مقص'];
-            const computerChoice = choices[Math.floor(Math.random() * 3)];
-            let result = '';
-            
-            if(playerChoice === computerChoice) {
-                result = 'التعادل!';
-            } else if (
-                (playerChoice === 'حجر' && computerChoice === 'مقص') ||
-                (playerChoice === 'ورقة' && computerChoice === 'حجر') ||
-                (playerChoice === 'مقص' && computerChoice === 'ورقة')
-            ) {
-                result = 'أنت الفائز في هذه الجولة!';
-                playerWins++;
-            } else {
-                result = 'تركي يفوز في هذه الجولة!';
-                computerWins++;
-            }
-            rounds++;
+    function playGame(playerChoice) {
+      const choices = ['حجر', 'ورقة', 'مقص'];
+      const computerChoice = choices[Math.floor(Math.random() * 3)];
+      let result = '';
 
-            document.getElementById('result').innerHTML = `أنت اخترت: ${playerChoice} <br> تركي اختار: ${computerChoice} <br> ${result}`;
+      if(playerChoice === computerChoice) {
+        result = 'التعادل!';
+      } else if (
+        (playerChoice === 'حجر' && computerChoice === 'مقص') ||
+        (playerChoice === 'ورقة' && computerChoice === 'حجر') ||
+        (playerChoice === 'مقص' && computerChoice === 'ورقة')
+      ) {
+        result = 'أنت الفائز في هذه الجولة!';
+        playerWins++;
+      } else {
+        result = 'تركي يفوز في هذه الجولة!';
+        computerWins++;
+      }
+      rounds++;
 
-            if (rounds === 3) {
-                if (playerWins > computerWins) {
-                    document.getElementById('result').innerHTML += "<br>أنت الفائز النهائي!";
-                } else if (computerWins > playerWins) {
-                    document.getElementById('result').innerHTML += "<br>تركي الفائز النهائي!";
-                } else {
-                    document.getElementById('result').innerHTML += "<br>اللعبة انتهت بالتعادل!";
-                }
+      document.getElementById('round-number').innerHTML = `الجولة ${rounds} من 3`;
+      document.getElementById('result').innerHTML = `
+        <span style="color: #000;">أنت اخترت: ${playerChoice}</span><br>
+        <span style="color: #000;">تركي اختار: ${computerChoice}</span><br>
+        ${result}
+      `;
 
-                // إعادة تعيين المتغيرات لإمكانية بدء لعبة جديدة
-                playerWins = 0;
-                computerWins = 0;
-                rounds = 0;
-            }
-        }
-    </script>
-</body>
-</html>
+      if (rounds === 3) {
+        if (playerWins > computerWins) {
+          document.getElementById('result').innerHTML += "<br><span style='color: green'>أنت الفائز النهائي!</span>";
+        } else if (computerWins > playerWins) {
+          document.getElementById('result').innerHTML += "<br><span style='color: red'>تركي الفائز النهائي!</span>";
+        } else {
+          document.getElementById('result').innerHTML += "<br><span style='color: yellow'>اللعبة انتهت بالتعادل!</span
