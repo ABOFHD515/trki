@@ -14,15 +14,11 @@
       flex-direction: column;
       height: 100vh;
       margin: 0;
+      transition: background-color 0.5s ease; /* تأثير انتقالي للخلفية */
     }
     #game {
       text-align: center;
       width: 300px;
-    }
-    #round-number {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 10px;
     }
     button {
       background-color: #4CAF50; /* لون الخلفية للأزرار */
@@ -35,6 +31,10 @@
       cursor: pointer;
       border: none;
       border-radius: 5px;
+      transition: transform 0.2s ease; /* تأثير تحرك للأزرار */
+    }
+    button:active {
+      transform: scale(0.9); /* تأثير الضغط على الزر */
     }
     #result {
       color: #FFD700; /* لون نص النتيجة */
@@ -44,81 +44,74 @@
   </style>
 </head>
 <body>
-  <h1 id="game-title">تحدي تركي</h1>
+  <h1>تحدي تركي</h1>
   <div id="game">
-    <span id="round-number">الجولة 1 من 3</span>
-    <div id="options">
-      <button id="rock">حجر</button>
-      <button id="paper">ورقة</button>
-      <button id="scissors">مقص</button>
-    </div>
+    <button id="rock">حجر</button>
+    <button id="paper">ورقة</button>
+    <button id="scissors">مقص</button>
     <div id="result"></div>
   </div>
   <script>
     let playerWins = 0;
     let computerWins = 0;
-    let rounds = 1; // بداية العد من 1
+    let rounds = 1;
 
-    document.getElementById('rock').addEventListener('click', function() {
-      playGame('حجر');
-    });
-
-    document.getElementById('paper').addEventListener('click', function() {
-      playGame('ورقة');
-    });
-
-    document.getElementById('scissors').addEventListener('click', function() {
-      playGame('مقص');
-    });
+    document.getElementById('rock').addEventListener('click', function() { playGame('حجر'); });
+    document.getElementById('paper').addEventListener('click', function() { playGame('ورقة'); });
+    document.getElementById('scissors').addEventListener('click', function() { playGame('مقص'); });
 
     function playGame(playerChoice) {
       const choices = ['حجر', 'ورقة', 'مقص'];
       const computerChoice = choices[Math.floor(Math.random() * choices.length)];
       let result = '';
-
+      
       if (playerChoice === computerChoice) {
-        result = 'التعادل!';
+        result = 'فرررررر التعادل!';
       } else if (
         (playerChoice === 'حجر' && computerChoice === 'مقص') ||
         (playerChoice === 'ورقة' && computerChoice === 'حجر') ||
         (playerChoice === 'مقص' && computerChoice === 'ورقة')
       ) {
-        result = 'أنت الفائز في هذه الجولة!';
+        result = 'فرررررر أنت الفائز في هذه الجولة!';
         playerWins++;
       } else {
-        result = 'تركي يفوز في هذه الجولة!';
+        result = 'فرررررر تركي يفوز في هذه الجولة!';
         computerWins++;
       }
 
-      document.getElementById('result').innerHTML = `أنت اخترت: ${playerChoice} <br> تركي اختار: ${computerChoice} <br> ${result}`;
-      
-      if (rounds >= 3) {
+      document.getElementById('result').innerHTML = `أنت اخترت: ${playerChoice}<br>تركي اختار: ${computerChoice}<br>${result}<br><br>النتيجة: اللاعب ${playerWins} - تركي ${computerWins}`;
+      updateInterface();
+
+      if (rounds === 3) {
         finalizeGame();
+        rounds = 1; // إعادة تعيين الجولات
+        playerWins = 0;
+        computerWins = 0;
       } else {
         rounds++;
-        document.getElementById('round-number').textContent = `الجولة ${rounds} من 3`;
+      }
+    }
+
+    function updateInterface() {
+      if (playerWins > computerWins) {
+        document.body.style.backgroundColor = "#4CAF50"; // لون للاعب
+      } else if (computerWins > playerWins) {
+        document.body.style.backgroundColor = "#f44336"; // لون للحاسوب
+      } else {
+        document.body.style.backgroundColor = "#555"; // لون محايد
       }
     }
 
     function finalizeGame() {
-      let finalMessage = "اللعبة انتهت. ";
+      let finalResult = "فرررررر اللعبة انتهت. ";
       if (playerWins > computerWins) {
-        finalMessage += "أنت الفائز النهائي!";
+        finalResult += "أنت الفائز النهائي!";
       } else if (computerWins > playerWins) {
-        finalMessage += "تركي الفائز النهائي!";
+        finalResult += "تركي الفائز النهائي!";
       } else {
-        finalMessage += "اللعبة انتهت بالتعادل!";
+        finalResult += "اللعبة انتهت بالتعادل!";
       }
-
-      document.getElementById('result').innerHTML = finalMessage + '<br><button onclick="resetGame()">إعادة اللعب</button>';
-    }
-
-    function resetGame() {
-      playerWins = 0;
-      computerWins = 0;
-      rounds = 1;
-      document.getElementById('result').innerHTML = '';
-      document.getElementById('round-number').textContent = "الجولة 1 من 3";
+      document.getElementById('result').innerHTML += `<br><br>${finalResult}`;
     }
   </script>
 </body>
