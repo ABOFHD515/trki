@@ -53,10 +53,12 @@
     <div id="result"></div>
   </div>
   <script>
+    // تعريف المتغيرات
     let playerWins = 0;
     let computerWins = 0;
     let rounds = 0;
 
+    // إضافة مستمعات الأحداث للأزرار
     document.getElementById('rock').addEventListener('click', function() {
       playGame('حجر');
     });
@@ -69,12 +71,17 @@
       playGame('مقص');
     });
 
+    // دالة اللعبة
     function playGame(playerChoice) {
+      // تعريف الخيارات
       const choices = ['حجر', 'ورقة', 'مقص'];
-      const computerChoice = choices[Math.floor(Math.random() * 3)];
-      let result = '';
 
-      if(playerChoice === computerChoice) {
+      // اختيار الحاسوب عشوائياً
+      const computerChoice = choices[Math.floor(Math.random() * 3)];
+
+      // تحديد النتيجة
+      let result = '';
+      if (playerChoice === computerChoice) {
         result = 'التعادل!';
       } else if (
         (playerChoice === 'حجر' && computerChoice === 'مقص') ||
@@ -87,19 +94,20 @@
         result = 'تركي يفوز في هذه الجولة!';
         computerWins++;
       }
-      rounds++;
 
+      // تحديث رقم الجولة
+      rounds++;
       document.getElementById('round-number').innerHTML = `الجولة ${rounds} من 3`;
+
+      // عرض النتيجة
       document.getElementById('result').innerHTML = `
         <span style="color: #000;">أنت اخترت: ${playerChoice}</span><br>
         <span style="color: #000;">تركي اختار: ${computerChoice}</span><br>
         ${result}
       `;
 
+      // التحقق من نهاية اللعبة
       if (rounds === 3) {
+        // عرض النتيجة النهائية
         if (playerWins > computerWins) {
-          document.getElementById('result').innerHTML += "<br><span style='color: green'>أنت الفائز النهائي!</span>";
-        } else if (computerWins > playerWins) {
-          document.getElementById('result').innerHTML += "<br><span style='color: red'>تركي الفائز النهائي!</span>";
-        } else {
-          document.getElementById('result').innerHTML += "<br><span style='color: yellow'>اللعبة انتهت بالتعادل!</span
+          document.
