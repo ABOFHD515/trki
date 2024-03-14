@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>تحدي تركي</title>
+    <style>
+        /* إضافة الأنماط هنا */
+        h1 {
+            color: #333;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            margin: 20px 0;
+        }
+
+        #game {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1>تحدي تركي</h1>
+    <div id="game">
+        <button id="rock">حجر</button>
+        <button id="paper">ورقة</button>
+        <button id="scissors">مقص</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        // إضافة الجافاسكربت هنا
+        document.getElementById('rock').addEventListener('click', function() {
+            playGame('حجر');
+        });
+
+        document.getElementById('paper').addEventListener('click', function() {
+            playGame('ورقة');
+        });
+
+        document.getElementById('scissors').addEventListener('click', function() {
+            playGame('مقص');
+        });
+
+        function playGame(playerChoice) {
+            const choices = ['حجر', 'ورقة', 'مقص'];
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            let result = '';
+
+            if(playerChoice === computerChoice) {
+                result = 'التعادل!';
+            } else if (
+                (playerChoice === 'حجر' && computerChoice === 'مقص') ||
+                (playerChoice === 'ورقة' && computerChoice === 'حجر') ||
+                (playerChoice === 'مقص' && computerChoice === 'ورقة')
+            ) {
+                result = 'أنت الفائز!';
+            } else {
+                result = 'تركي يفوز!';
+            }
+
+            document.getElementById('result').innerHTML = `أنت اخترت: ${playerChoice} <br> الكمبيوتر اختار: ${computerChoice} <br> ${result}`;
+        }
+    </script>
+</body>
+</html>
